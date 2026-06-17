@@ -1,0 +1,174 @@
+<div class="min-h-screen" style="background-color: #f5f0e8;">
+
+  <!-- NAVBAR -->
+ <nav style="background-color: #faf7f2; border-bottom: 1px solid #e8dcc8;" class="px-6 py-4">
+  <div class="flex items-center justify-between">
+
+    <!-- Brand -->
+    <div class="flex items-center gap-3">
+      <div style="background-color: #c17f3e;" class="w-8 h-8 rounded-lg flex items-center justify-center">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+        </svg>
+      </div>
+      <span style="color: #5c3d1e; font-family: Georgia, serif;" class="font-bold text-xl">
+        My Journal
+      </span>
+    </div>
+
+    <!-- Right side -->
+    <div class="flex items-center gap-4">
+      <span style="color: #a0856a;" class="text-sm hidden sm:block">
+        ✍️ {{ username() }}
+      </span>
+      <button
+        (click)="logout()"
+        style="color: #a0856a; border: 1px solid #d4b896;"
+        class="text-xs px-3 py-1.5 rounded-lg hover:bg-red-50 hover:text-red-500 hover:border-red-200 transition duration-200 cursor-pointer">
+        Logout
+      </button>
+    </div>
+
+  </div>
+</nav>
+
+  <!-- PAGE HEADER -->
+  <div class="max-w-3xl mx-auto px-6 pt-10 pb-6">
+    <div class="flex items-end justify-between">
+      <div>
+        <p style="color: #a0856a;" class="text-sm mb-1">
+          {{ today | date: 'EEEE, MMMM d, y' }}
+        </p>
+        <h1 style="color: #3d2b1f; font-family: Georgia, serif;" class="text-4xl font-bold">
+          Dear Diary...
+        </h1>
+        <p style="color: #a0856a;" class="text-sm mt-2">
+          {{ entries().length }} {{ entries().length === 1 ? 'entry' : 'entries' }} written
+        </p>
+      </div>
+
+      <!-- New Entry button -->
+      <button
+        (click)="goToCreate()"
+        style="background-color: #c17f3e;"
+        class="text-white text-sm font-semibold px-5 py-2.5 rounded-xl
+               hover:opacity-90 transition duration-200 cursor-pointer
+               flex items-center gap-2 shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        New Entry
+      </button>
+    </div>
+
+    <!-- Decorative divider -->
+    <div class="flex items-center gap-3 mt-6">
+      <div style="background-color: #d4b896;" class="flex-1 h-px"></div>
+      <span style="color: #c17f3e;" class="text-lg">✦</span>
+      <div style="background-color: #d4b896;" class="flex-1 h-px"></div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="max-w-3xl mx-auto px-6 pb-16">
+
+    <!-- Loading -->
+    @if (isLoading()) {
+      <div class="flex items-center justify-center py-20">
+        <div style="border-color: #c17f3e; border-top-color: transparent;"
+             class="w-8 h-8 border-4 rounded-full animate-spin">
+        </div>
+      </div>
+    }
+
+    <!-- Error -->
+    @else if (errorMessage()) {
+      <div class="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-red-600 text-sm">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <!-- Empty state -->
+    @else if (entries().length === 0) {
+      <div class="flex flex-col items-center justify-center py-20 text-center">
+        <p style="font-size: 48px;" class="mb-4">📖</p>
+        <h3 style="color: #5c3d1e; font-family: Georgia, serif;"
+            class="text-xl font-semibold mb-2">
+          Your diary is empty
+        </h3>
+        <p style="color: #a0856a;" class="text-sm mb-6">
+          Every great story starts with a single entry
+        </p>
+        <button
+          (click)="goToCreate()"
+          style="background-color: #c17f3e;"
+          class="text-white text-sm font-semibold px-5 py-2.5 rounded-xl
+                 hover:opacity-90 transition duration-200 cursor-pointer">
+          Write first entry
+        </button>
+      </div>
+    }
+
+    <!-- Entries -->
+    @else {
+      <div class="flex flex-col gap-6">
+        @for (entry of entries(); track entry.id) {
+
+          <!-- Journal Card -->
+          <div
+            style="background-color: #faf7f2;
+                   border: 1px solid #e8dcc8;
+                   box-shadow: 0 2px 12px rgba(139, 90, 43, 0.08);"
+            class="rounded-2xl p-7 relative transition duration-200 hover:shadow-md">
+
+            <!-- Top row — date + actions -->
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <span style="color: #c17f3e;" class="text-lg">📅</span>
+                <span style="color: #a0856a;" class="text-xs font-medium uppercase tracking-wide">
+                  {{ entry.date | date: 'MMMM d, y · h:mm a' }}
+                </span>
+              </div>
+
+              <!-- Edit + Delete -->
+              <div class="flex items-center gap-3">
+                <button
+                  (click)="router.navigate(['/journals', entry.id, 'edit'])"
+                  style="color: #c17f3e;"
+                  class="text-xs font-medium hover:opacity-70 cursor-pointer transition duration-200">
+                  ✏️ Edit
+                </button>
+                <span style="color: #d4b896;">|</span>
+                <button
+                  (click)="deleteEntry(entry.id, $event)"
+                  class="text-xs font-medium text-red-400 hover:text-red-600 cursor-pointer transition duration-200">
+                  🗑️ Delete
+                </button>
+              </div>
+            </div>
+
+            <!-- Title -->
+            <h2 style="color: #3d2b1f; font-family: Georgia, serif;"
+                class="text-xl font-bold mb-3 leading-snug">
+              {{ entry.title }}
+            </h2>
+
+            <!-- Decorative line under title -->
+            <div style="background-color: #e8dcc8;" class="h-px mb-4"></div>
+
+            <!-- Full content -->
+            <p style="color: #6b4c35; line-height: 1.85;"
+               class="text-sm whitespace-pre-wrap">
+              {{ entry.content }}
+            </p>
+
+          </div>
+
+        }
+      </div>
+    }
+
+  </div>
+
+</div>

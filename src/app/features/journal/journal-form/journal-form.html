@@ -1,0 +1,99 @@
+<div class="min-h-screen" style="background-color: #f5f0e8;">
+
+  <!-- NAVBAR -->
+  <nav style="background-color: #faf7f2; border-bottom: 1px solid #e8dcc8;" class="px-6 py-4">
+    <div class="max-w-3xl mx-auto flex items-center gap-4">
+      <button
+        (click)="goBack()"
+        style="color: #a0856a;"
+        class="hover:opacity-70 transition duration-200 cursor-pointer">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <h1 style="color: #5c3d1e; font-family: Georgia, serif;" class="font-bold text-lg">
+        @if (entryId()) { Edit Entry } @else { New Entry }
+      </h1>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="max-w-3xl mx-auto px-6 py-8">
+    @if (isFetching()) {
+      <div class="flex items-center justify-center py-20">
+        <div style="border-color: #c17f3e; border-top-color: transparent;"
+             class="w-8 h-8 border-4 rounded-full animate-spin"></div>
+      </div>
+    }
+
+    @else {
+      <div style="background-color: #faf7f2; border: 1px solid #e8dcc8;
+                  box-shadow: 0 2px 12px rgba(139, 90, 43, 0.08);"
+           class="rounded-2xl p-8">
+
+        <form [formGroup]="journalForm" (ngSubmit)="onSubmit()" class="space-y-6">
+
+          <!-- Title -->
+          <div>
+            <input
+              type="text"
+              formControlName="title"
+              placeholder="Entry title..."
+              style="color: #3d2b1f; font-family: Georgia, serif;
+                     border-bottom: 2px solid #e8dcc8; background: transparent;"
+              class="w-full px-0 py-2 text-2xl font-bold placeholder-stone-300
+                     border-0 focus:outline-none focus:border-amber-700 transition duration-200"
+            />
+            @if (title?.invalid && title?.touched) {
+              <p class="text-red-400 text-xs mt-1">Title is required.</p>
+            }
+          </div>
+
+          <!-- Content -->
+          <textarea
+            formControlName="content"
+            placeholder="Write your thoughts here..."
+            rows="14"
+            style="color: #6b4c35; background-color: #f5f0e8;
+                   border: 1px solid #e8dcc8; line-height: 1.85;"
+            class="w-full px-4 py-4 text-sm rounded-xl resize-none
+                   focus:outline-none focus:ring-2 focus:ring-amber-700
+                   placeholder-stone-300 transition duration-200">
+          </textarea>
+
+          <!-- Error -->
+          @if (errorMessage()) {
+            <div class="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+              <p class="text-red-500 text-sm">{{ errorMessage() }}</p>
+            </div>
+          }
+
+          <!-- Actions -->
+          <div class="flex items-center justify-between pt-2">
+            <button
+              type="button"
+              (click)="goBack()"
+              style="color: #a0856a;"
+              class="text-sm font-medium hover:opacity-70 transition duration-200 cursor-pointer">
+              Cancel
+            </button>
+            <button
+              type="submit"
+              [disabled]="isLoading()"
+              style="background-color: #c17f3e;"
+              class="text-white font-semibold px-6 py-2.5 rounded-xl text-sm
+                     hover:opacity-90 disabled:opacity-50 transition duration-200 cursor-pointer">
+              @if (isLoading()) {
+                @if (entryId()) { Updating... } @else { Saving... }
+              } @else {
+                @if (entryId()) { Update Entry } @else { Save Entry }
+              }
+            </button>
+          </div>
+
+        </form>
+      </div>
+    }
+  </div>
+
+</div>

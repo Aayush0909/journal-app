@@ -1,0 +1,192 @@
+<div class="min-h-screen flex">
+
+  <!-- LEFT PANEL — same as login for brand consistency -->
+  <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-800 to-slate-900 flex-col justify-between p-12 relative overflow-hidden">
+
+    <!-- Background decorative circles -->
+    <div class="absolute top-[-80px] left-[-80px] w-72 h-72 bg-indigo-500 opacity-10 rounded-full"></div>
+    <div class="absolute bottom-[-60px] right-[-60px] w-96 h-96 bg-purple-500 opacity-10 rounded-full"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-400 opacity-5 rounded-full"></div>
+
+    <!-- Logo -->
+    <div class="relative z-10">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-indigo-500 rounded-xl flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <span class="text-white text-xl font-semibold tracking-tight">Journal App</span>
+      </div>
+    </div>
+
+    <!-- Center quote — different from login -->
+    <div class="relative z-10">
+      <blockquote class="text-white">
+        <p class="text-3xl font-light leading-snug tracking-tight mb-6">
+          "Fill your paper with<br/>the breathings of your heart."
+        </p>
+        <footer class="text-slate-400 text-sm">— William Wordsworth</footer>
+      </blockquote>
+    </div>
+
+    <!-- Bottom features -->
+    <div class="relative z-10 space-y-3">
+      <div class="flex items-center gap-3 text-slate-300 text-sm">
+        <div class="w-5 h-5 bg-indigo-500 bg-opacity-30 rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-3 h-3 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        Free to use — your entries stay private
+      </div>
+      <div class="flex items-center gap-3 text-slate-300 text-sm">
+        <div class="w-5 h-5 bg-indigo-500 bg-opacity-30 rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-3 h-3 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        Secured with JWT — nobody reads your journal
+      </div>
+      <div class="flex items-center gap-3 text-slate-300 text-sm">
+        <div class="w-5 h-5 bg-indigo-500 bg-opacity-30 rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-3 h-3 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        Start writing in under 60 seconds
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL — register form -->
+  <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
+    <div class="w-full max-w-md">
+
+      <!-- Mobile logo -->
+      <div class="flex items-center gap-3 mb-8 lg:hidden">
+        <div class="w-9 h-9 bg-indigo-500 rounded-xl flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <span class="text-slate-800 text-lg font-semibold">Journal App</span>
+      </div>
+
+      <!-- Heading -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-slate-800 mb-2">Create account</h1>
+        <p class="text-slate-500 text-sm">Start writing your story today</p>
+      </div>
+
+      <!-- Form -->
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5">
+
+  <!-- Username -->
+  <div>
+    <label class="block text-sm font-medium text-slate-700 mb-1.5">Username</label>
+    <input
+      type="text"
+      formControlName="userName"
+      placeholder="Choose a username"
+      class="w-full px-4 py-3 rounded-xl border text-slate-800 placeholder-slate-400 text-sm
+             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+             transition duration-200"
+      [class.border-red-400]="userName?.invalid && userName?.touched"
+      [class.border-slate-200]="!(userName?.invalid && userName?.touched)"
+    />
+    @if (userName?.invalid && userName?.touched) {
+      <p class="text-red-500 text-xs mt-1.5">
+        @if (userName?.errors?.['required']) { Username is required. }
+        @else if (userName?.errors?.['minlength']) { At least 3 characters. }
+      </p>
+    }
+  </div>
+
+  <!-- Password -->
+  <div>
+    <label class="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
+    <input
+      type="password"
+      formControlName="password"
+      placeholder="Create a password"
+      class="w-full px-4 py-3 rounded-xl border text-slate-800 placeholder-slate-400 text-sm
+             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+             transition duration-200"
+      [class.border-red-400]="password?.invalid && password?.touched"
+      [class.border-slate-200]="!(password?.invalid && password?.touched)"
+    />
+    @if (password?.invalid && password?.touched) {
+      <p class="text-red-500 text-xs mt-1.5">
+        @if (password?.errors?.['required']) { Password is required. }
+        @else if (password?.errors?.['minlength']) { At least 6 characters. }
+      </p>
+    }
+  </div>
+
+  <!-- Confirm Password -->
+  <div>
+    <label class="block text-sm font-medium text-slate-700 mb-1.5">Confirm Password</label>
+    <input
+      type="password"
+      formControlName="confirmPassword"
+      placeholder="Repeat your password"
+      class="w-full px-4 py-3 rounded-xl border text-slate-800 placeholder-slate-400 text-sm
+             focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+             transition duration-200"
+      [class.border-red-400]="(confirmPassword?.touched && registerForm.errors?.['passwordMismatch'])"
+      [class.border-slate-200]="!(confirmPassword?.touched && registerForm.errors?.['passwordMismatch'])"
+    />
+    @if (confirmPassword?.touched && registerForm.errors?.['passwordMismatch']) {
+      <p class="text-red-500 text-xs mt-1.5">Passwords do not match.</p>
+    }
+  </div>
+
+  <!-- Backend error -->
+  @if (errorMessage()) {
+    <div class="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+      <p class="text-red-600 text-sm">{{ errorMessage() }}</p>
+    </div>
+  }
+
+  <!-- Success message -->
+  @if (successMessage()) {
+    <div class="bg-green-50 border border-green-200 rounded-xl px-4 py-3">
+      <p class="text-green-600 text-sm">{{ successMessage() }}</p>
+    </div>
+  }
+
+  <!-- Submit -->
+  <button
+    type="submit"
+    [disabled]="isLoading()"
+    class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed
+           text-white font-semibold py-3 px-4 rounded-xl transition duration-200 text-sm mt-2 cursor-pointer"
+  >
+    @if (isLoading()) { Creating account... }
+    @else { Create account }
+  </button>
+
+</form>
+
+      <!-- Divider -->
+      <div class="flex items-center gap-4 my-6">
+        <div class="flex-1 h-px bg-slate-200"></div>
+        <span class="text-slate-400 text-xs">or</span>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+
+      <!-- Login link -->
+      <p class="text-center text-sm text-slate-500">
+        Already have an account?
+        <a routerLink="/login" class="text-indigo-600 hover:text-indigo-700 font-semibold ml-1">
+          Sign in
+        </a>
+      </p>
+
+    </div>
+  </div>
+
+</div>
